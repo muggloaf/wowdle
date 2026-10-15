@@ -1,5 +1,6 @@
 #include "core/candidate_filter.hpp"
 #include "core/feedback.hpp"
+#include "probability/prior.hpp"
 #include <cctype>
 #include <chrono>
 #include <fstream>
@@ -74,11 +75,24 @@ bool solved(const vector<char>& feedback) {
     return true;
 }
 
+void print_top_candidates(const vector<pair<string, double>>& ranked) {
+    cout << "most likely answers:\n";
+    size_t limit = ranked.size();
+    if (limit > 5) {
+        limit = 5;
+    }
+    for (size_t i = 0; i < limit; ++i) {
+        cout << "  " << i + 1 << ". " << ranked[i].first << " ("
+             << ranked[i].second * 100 << "%)\n";
+    }
+}
+
 string feedback_text(const vector<char>& feedback) {
     return string(feedback.begin(), feedback.end());
 }
 
-void play_against_computer(const vector<string>& words) {
+void play_against_computer(const vector<string>& words,
+                           const map<string, double>& weights) {
     random_device random;
     auto now = chrono::high_resolution_clock::now().time_since_epoch().count();
     mt19937 generator(random() ^ now);
@@ -91,11 +105,14 @@ void play_against_computer(const vector<string>& words) {
     cout << "the computer has picked a secret word\n\n";
 
     while (!candidates.empty()) {
-        string guess = candidates.front();
+        vector<pair<string, double>> ranked =
+            rank_candidates(candidates, weights);
+        string guess = ranked.front().first;
         vector<char> feedback = evaluate_feedback(guess, secret);
 
         cout << "guess " << turn << ": " << guess << '\n';
         cout << "feedback: " << feedback_text(feedback) << '\n';
+        print_top_candidates(ranked);
 
         if (solved(feedback)) {
             cout << "solved in " << turn << " guess";
@@ -130,9 +147,17 @@ int main(int argc, char* argv[]) {
 
     try {
         vector<string> words = load_words(filename);
+        map<string, double> weights;
+        ifstream frequency_file("data/word_frequencies_fives.txt");
+        if (frequency_file) {
+            weights = load_word_weights("data/word_frequencies_fives.txt");
+            cout << "loaded word frequencies\n";
+        } else {
+            cout << "no word frequencies found; using uniform probabilities\n";
+        }
 
         if (computer_mode) {
-            play_against_computer(words);
+            play_against_computer(words, weights);
             return 0;
         }
 
@@ -143,8 +168,11 @@ int main(int argc, char* argv[]) {
         cout << "type q instead of feedback to quit\n\n";
 
         while (!candidates.empty()) {
-            string guess = candidates.front();
+            vector<pair<string, double>> ranked =
+                rank_candidates(candidates, weights);
+            string guess = ranked.front().first;
             cout << "guess " << turn << ": " << guess << '\n';
+            print_top_candidates(ranked);
 
             vector<char> feedback = read_feedback(guess);
             if (feedback.empty()) {
