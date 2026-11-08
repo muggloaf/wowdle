@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wowdle Solver</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <h1>wowdle</h1>
+      </div>
+      <div class="top-actions">
+        <button id="help-button" class="help-button" aria-label="How to use Wowdle Solver">?</button>
+      </div>
+    </header>
+
+    <dialog id="help-dialog" class="help-dialog">
+      <div class="help-dialog-header">
+        <div>
+          <span class="label">quick start</span>
+          <h2>how to use</h2>
+        </div>
+        <button id="close-help" class="close-button" aria-label="Close help">x</button>
+      </div>
+      <ol>
+        <li>Play the recommended word in Wordle.</li>
+        <li>Enter the result as <b>g</b>, <b>y</b>, and <b>x</b>.</li>
+        <li>Submit to get the next recommendation.</li>
+        <li>Use <b>c</b> to choose another word from the list.</li>
+      </ol>
+      <p>Auto mode prepares the word for you. Press Play before it is sent.</p>
+    </dialog>
+
+    <nav class="mode-switch" aria-label="Solver mode">
+      <button class="mode active" data-mode="manual">manual</button>
+      <button class="mode" data-mode="auto">auto</button>
+    </nav>
+
+    <section class="board-panel">
+      <div class="section-heading">
+        <div>
+          <span class="label">current turn</span>
+          <h2>play a guess</h2>
+        </div>
+        <span id="turn-mark" class="turn-mark">01 / 06</span>
+      </div>
+
+      <label class="field-label" for="guess-input">guess</label>
+      <input id="guess-input" class="guess-input" maxlength="5" value="THEIR" autocomplete="off" spellcheck="false" aria-label="Current guess">
+
+      <div class="feedback-heading">
+        <label class="field-label" for="feedback-input">feedback</label>
+        <span class="hint">type x, y, or g</span>
+      </div>
+      <input id="feedback-input" class="feedback-input" maxlength="5" placeholder="xxxxx" autocomplete="off" spellcheck="false" aria-label="Wordle feedback">
+      <div id="feedback-tiles" class="feedback-tiles" aria-live="polite"></div>
+
+      <p id="mode-note" class="mode-note">Enter the colors you see on the game board, then submit.</p>
+      <button id="submit-button" class="primary-button">submit feedback <b>enter</b></button>
+      <button id="play-button" class="play-button hidden">play this guess <b>arrow right</b></button>
+    </section>
+
+    <section id="completion-panel" class="completion-panel hidden" aria-live="polite">
+      <div class="completion-mark">g</div>
+      <span class="label">puzzle complete</span>
+      <h2>you got it</h2>
+      <div id="completion-word" class="completion-word">THEIR</div>
+      <p>the solver confirmed the answer.</p>
+      <button id="again-button" class="primary-button">solve another <b>restart</b></button>
+    </section>
+
+    <section class="recommendation-panel">
+      <div class="recommendation-main">
+        <div class="section-heading compact">
+          <div>
+            <span class="label">solver recommendation</span>
+            <h2>next guess</h2>
+          </div>
+          <span id="score-label" class="score-label">combined 0.94</span>
+        </div>
+        <div class="hero-guess" id="hero-guess">THEIR</div>
+        <div class="reason-row">
+          <span>information + likelihood</span>
+          <span id="candidate-count">216 candidates</span>
+        </div>
+      </div>
+
+      <div class="answer-list">
+        <div class="list-heading">
+          <span class="label">same combined ranking</span>
+          <span class="label">score</span>
+        </div>
+        <ol id="recommendation-list"></ol>
+      </div>
+    </section>
+
+    <details class="analysis">
+      <summary>solver analysis <span>+</span></summary>
+      <div class="analysis-grid">
+        <div><span class="label">entropy</span><strong>4.85 bits</strong></div>
+        <div><span class="label">answer likelihood</span><strong>25.47%</strong></div>
+        <div><span class="label">combined score</span><strong>0.94</strong></div>
+        <div><span class="label">remaining</span><strong id="analysis-count">216</strong></div>
+      </div>
+    </details>
+
+    <footer>
+      <span id="backend-status">cpp solver bridge: preview mode</span>
+      <span>v0.1</span>
+    </footer>
+  </main>
+  <script src="backend.js?v=6"></script>
+  <script src="app.js?v=6"></script>
+</body>
+</html>

@@ -37,6 +37,20 @@ python tools/generate_frequency_data.py
 This creates `data/word_frequencies_fives.txt`. The C++ program only reads the
 generated file; it does not depend on Python at runtime.
 
+## Browser extension backend
+
+The extension UI is in `extension/`. Its solver calls the existing C++ code
+through WebAssembly. Install and activate Emscripten, then run:
+
+```powershell
+./tools/build_wasm.ps1
+```
+
+That copies the five-letter dictionaries into the extension and creates
+`extension/wowdle.js` and `extension/wowdle.wasm`. Load the `extension/` folder
+from `chrome://extensions` with Developer mode enabled. Without the generated
+WebAssembly files, the extension stays in preview mode.
+
 The solver combines entropy and frequency into one recommendation score. This
 lets it balance an information-gathering word such as `rates` with a likely
 answer such as `about`, instead of presenting them as competing answers. The
