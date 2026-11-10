@@ -4,7 +4,8 @@ A generalized Wordle solver framework in C++. Phase 1 provides the standalone
 Wordle feedback engine with correct duplicate-letter handling. Phase 2 filters
 possible answers by comparing simulated feedback. Phase 3 adds a basic command-
 line solver. Phase 4 ranks remaining answers using English word-frequency data.
-Phase 5 chooses guesses using expected information gain.
+Phase 5 chooses guesses using expected information gain. Phase 6 measures
+candidate-space separation. Phase 7 models the risk of information-only guesses.
 
 ## Build and test
 
@@ -22,6 +23,12 @@ g++ -std=c++17 -Isrc src/probability/prior.cpp tests/test_prior.cpp -o prior_tes
 
 g++ -std=c++17 -Isrc src/core/feedback.cpp src/probability/prior.cpp src/strategies/entropy.cpp tests/test_entropy.cpp -o entropy_tests.exe
 ./entropy_tests.exe
+
+g++ -std=c++17 -Isrc src/core/feedback.cpp src/strategies/distance.cpp tests/test_distance.cpp -o distance_tests.exe
+./distance_tests.exe
+
+g++ -std=c++17 -Isrc src/strategies/risk.cpp tests/test_risk.cpp -o risk_tests.exe
+./risk_tests.exe
 
 g++ -std=c++17 -Isrc src/main.cpp src/core/feedback.cpp src/core/candidate_filter.cpp src/probability/prior.cpp src/strategies/entropy.cpp -o wowdle.exe
 ./wowdle.exe
@@ -57,6 +64,9 @@ answer such as `about`, instead of presenting them as competing answers. The
 combined score is calculated against every remaining answer, while
 the CLI checks the top 500 probability-ranked words as possible guesses so the
 five-letter solver stays practical. You can also provide a different word list:
+
+Distance and risk are currently independent experimental metrics. Phase 8 will
+use them in the adaptive recommendation score.
 
 ```powershell
 ./wowdle.exe data/wordlist_fives.txt
