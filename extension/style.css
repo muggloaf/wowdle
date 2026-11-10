@@ -60,6 +60,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--green-dark)
 }
 
 .topbar { align-items: flex-start; margin-bottom: 18px; }
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark { display: block; flex: 0 0 32px; }
 .eyebrow, .label, .hint, .connection, .round, .turn-mark, footer, .reason-row, .score-label {
   font-family: 'Clear Sans', Arial, sans-serif;
   text-transform: uppercase;

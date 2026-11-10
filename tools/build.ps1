@@ -7,7 +7,7 @@ try {
     $core = @('src/core/feedback.cpp', 'src/core/candidate_filter.cpp', 'src/probability/prior.cpp')
     $strategy = @('src/strategies/entropy.cpp', 'src/strategies/distance.cpp', 'src/strategies/risk.cpp', 'src/strategies/scoring.cpp', 'src/strategies/adaptive.cpp')
     $evaluation = @('src/evaluation/benchmark.cpp')
-    & g++ -std=c++17 -O2 -Isrc src/main.cpp @core @strategy @evaluation -o wowdle.exe
+    & g++ -std=c++17 -O2 -Isrc src/main.cpp @core @strategy @evaluation -o .build/wowdle.exe
     if ($LASTEXITCODE -ne 0) { throw 'CLI build failed.' }
     if ($Test) {
         foreach ($suite in @('feedback', 'candidate_filter', 'prior', 'entropy', 'distance', 'risk', 'scoring', 'adaptive', 'benchmark', 'bridge')) {
@@ -22,7 +22,7 @@ try {
         & node --test tests/test_content.js tests/test_extension.js tests/test_wasm.js
         if ($LASTEXITCODE -ne 0) { throw 'Extension tests failed.' }
     }
-    Write-Host 'built wowdle.exe'
+    Write-Host 'built .build/wowdle.exe'
 } finally {
     Pop-Location
 }

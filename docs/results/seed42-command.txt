@@ -1,0 +1,2 @@
+wowdle.exe --benchmark 100 --strategy all --seed 42 --csv benchmark_results/full_dictionary_seed42_summary.csv --trace benchmark_results/full_dictionary_seed42_turns.csv
+Defaults: 6 turns; pool 100; frequency priors; shipped dictionary after skipping 21 punctuation entries; uniform answer sampling with replacement.

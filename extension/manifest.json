@@ -1,11 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "Wowdle Solver",
-  "version": "0.3.1",
-  "description": "A Wordle solver powered by the Wowdle C++ backend.",
+  "name": "wowdle",
+  "version": "0.3.2",
+  "description": "Wordle guesses, feedback, and strategy analysis.",
   "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
   "action": {
-    "default_title": "Open Wowdle Solver"
+    "default_title": "wowdle",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "24": "icons/icon24.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   },
   "background": {
     "service_worker": "background.js"

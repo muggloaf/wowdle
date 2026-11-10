@@ -1,0 +1,323 @@
+{
+  "run_date": "2026-11-10",
+  "timezone": "Asia/Calcutta",
+  "exact_start_and_end_times": null,
+  "recorded_command": "wowdle.exe --benchmark 100 --strategy all --seed 42 --csv benchmark_results/full_dictionary_seed42_summary.csv --trace benchmark_results/full_dictionary_seed42_turns.csv",
+  "original_artifact_directory": "benchmark_results/",
+  "settings": {
+    "games_per_strategy": 100,
+    "strategies": [
+      "random",
+      "frequency",
+      "positional",
+      "entropy",
+      "expected",
+      "minimax",
+      "distance",
+      "adaptive"
+    ],
+    "seed": 42,
+    "max_guesses": 6,
+    "pool_limit": 100,
+    "answer_sampling": "uniform with replacement; identical sampled answer sequence across strategies",
+    "candidate_probability_model": "shipped frequency weights, renormalized after exact feedback filtering",
+    "guess_rng": "separate mt19937 seeded 42 for each strategy; independent of answer sampling",
+    "scored_guess_pool": "frequency-guided capped shortlist; random normally samples all remaining candidates",
+    "shared_endgame_policy": "sole candidate guessed directly; final turn selects highest-probability candidate",
+    "opening_cache": "one calculated opening reused across each nonrandom strategy batch; charged once to first game",
+    "adaptive_thresholds": {
+      "many": 500,
+      "small": 50,
+      "tiny": 5
+    },
+    "adaptive_weights_information_distance_likelihood_risk_reduction": {
+      "many": [
+        0.65,
+        0.2,
+        0.05,
+        0.1,
+        0.1
+      ],
+      "moderate": [
+        0.4,
+        0.15,
+        0.1,
+        0.2,
+        0.35
+      ],
+      "small": [
+        0.15,
+        0.05,
+        0.45,
+        0.65,
+        0.35
+      ],
+      "tiny": [
+        0.05,
+        0,
+        0.8,
+        1,
+        0.15
+      ]
+    }
+  },
+  "dictionary": {
+    "source_tokens": 16152,
+    "skipped_non_alphabetic_entries": 21,
+    "answer_words": 16131,
+    "valid_guess_words": 16131,
+    "word_length": 5,
+    "official_curated_wordle_answer_list": false
+  },
+  "audit": {
+    "date": "2026-11-10",
+    "games": 800,
+    "turn_rows": 3701,
+    "trace_rows_by_strategy": {
+      "random": 481,
+      "frequency": 453,
+      "positional": 475,
+      "entropy": 446,
+      "expected": 444,
+      "minimax": 464,
+      "distance": 468,
+      "adaptive": 470
+    },
+    "unique_sampled_answers": 98,
+    "checks": [
+      "Every summary count, rate, mean, median and worst-case guess count recomputed from trace.",
+      "All 800 games replayed against duplicate-safe feedback and the shipped dictionary.",
+      "Each trace candidate count, candidate/probe classification, risk and answer probability verified.",
+      "All strategies verified against the same answer for each game; each answer revealed by at least one successful strategy.",
+      "Every failure exhausted six turns; no guessed word was repeated within a game.",
+      "Shared singleton and final-turn answer selection safeguards checked."
+    ],
+    "runtime_limit": "Original measured summary preserved; per-game times were not included in the trace and cannot be independently reconstructed."
+  },
+  "sampled_answers_in_game_order_derived_from_trace": [
+    "gyppy",
+    "snees",
+    "wakhi",
+    "coffs",
+    "salay",
+    "sizes",
+    "ochry",
+    "oasal",
+    "cavin",
+    "kabob",
+    "cavin",
+    "bider",
+    "aspis",
+    "khvat",
+    "tetra",
+    "gaols",
+    "ofuro",
+    "cadgy",
+    "rides",
+    "platt",
+    "ahwal",
+    "ascon",
+    "witan",
+    "ruble",
+    "stunt",
+    "vials",
+    "dacca",
+    "abail",
+    "coble",
+    "zaque",
+    "coffs",
+    "oxlip",
+    "firma",
+    "osier",
+    "malar",
+    "acker",
+    "japer",
+    "akala",
+    "farce",
+    "malax",
+    "osmol",
+    "hokku",
+    "butty",
+    "appet",
+    "faroe",
+    "wordy",
+    "grope",
+    "didie",
+    "keres",
+    "begot",
+    "slake",
+    "pacay",
+    "crest",
+    "haram",
+    "luite",
+    "yauds",
+    "notre",
+    "knife",
+    "appal",
+    "tecum",
+    "oping",
+    "quern",
+    "chugs",
+    "karou",
+    "avgas",
+    "adzer",
+    "wadya",
+    "virtu",
+    "whump",
+    "mudir",
+    "sowar",
+    "hause",
+    "fiscs",
+    "agape",
+    "bevel",
+    "dhole",
+    "racks",
+    "dogie",
+    "joshi",
+    "qursh",
+    "bowly",
+    "orlon",
+    "lexis",
+    "style",
+    "ambar",
+    "citee",
+    "udals",
+    "hemol",
+    "dunne",
+    "cocco",
+    "poufy",
+    "septa",
+    "flump",
+    "iroha",
+    "macau",
+    "curdy",
+    "mindy",
+    "musee",
+    "colla",
+    "along"
+  ],
+  "artifacts": {
+    "seed42-summary.csv": {
+      "sha256": "1063552c69606ca0096849289064f4d6ff1aea118d027fc2464ea76fcc923908",
+      "bytes": 852
+    },
+    "seed42-turns.csv.gz": {
+      "sha256": "d595a7acfb24962de934f93e603bc16a681136d5bcb2c079bdd264ab9597b741",
+      "bytes": 108125,
+      "uncompressed_sha256": "1531270157f2cc4fa3c1e23a7a67af532bed817f6506d85b48bfb6cc07d358bd",
+      "uncompressed_bytes": 529034,
+      "gzip_mtime": 0
+    },
+    "seed42-command.txt": {
+      "sha256": "49929f16648cf5a6209f87662cd397f923e7006b77ee60e623aa2ff4fdf21373",
+      "bytes": 319
+    }
+  },
+  "snapshot_hashes": {
+    "collected_date": "2026-11-10",
+    "collection_context": "Collected while documenting the completed run; contemporaneous hashes were not recorded at benchmark start. These identify the input/source snapshot available during the audit, not an independently archived historical build.",
+    "inputs": {
+      "data/wordlist_fives.txt": {
+        "sha256": "e69e5271ecfa49d8016024a9fa432b7fd2f787511c76d8f36222650f7bea9882",
+        "bytes": 113062
+      },
+      "data/word_frequencies_fives.txt": {
+        "sha256": "a2e69367997f66956ea3c97e11d102dd71ecad5346e31b9bae8978d7b19b8011",
+        "bytes": 219193
+      }
+    },
+    "source_files": {
+      "src/core/candidate_filter.cpp": {
+        "sha256": "f2fa562c16e305faac35a255a3d1cf80ad9ac7ce66481d8739d92c315ffb8d74",
+        "bytes": 710
+      },
+      "src/core/feedback.cpp": {
+        "sha256": "fff9772f293960c97f9276446e50efee184b8f7145f28bd38cb9fb03a6f83b7f",
+        "bytes": 1188
+      },
+      "src/evaluation/benchmark.cpp": {
+        "sha256": "1ed653a14e151caac6904d88a55a06f5645f638b78bbdbdd9b16d18ab34b802d",
+        "bytes": 14273
+      },
+      "src/main.cpp": {
+        "sha256": "38df14383ebc8bd6eac616ad4617ea1aac0bef96a129a86ebfe4f552a946c2de",
+        "bytes": 18714
+      },
+      "src/probability/prior.cpp": {
+        "sha256": "7fe407640634bff61fa6cda77f2e54c0418c8f2cb6bc266824767c072007def9",
+        "bytes": 2028
+      },
+      "src/strategies/adaptive.cpp": {
+        "sha256": "7b6288fa936afd10a472029d20e01f85ec35f02885fd7f6d749f0c9e7e4e060f",
+        "bytes": 9318
+      },
+      "src/strategies/distance.cpp": {
+        "sha256": "af47801c4d7861c73d36848660e9a799ee70b92d368ed6a42e0b137232dfbbb4",
+        "bytes": 3195
+      },
+      "src/strategies/entropy.cpp": {
+        "sha256": "80aae73a462d52b26c453138b7fd3a9717026d3ef14e09621942392abd3367fb",
+        "bytes": 4141
+      },
+      "src/strategies/risk.cpp": {
+        "sha256": "1e33b0f11b4b63213b4fea2c8d20bffc1edd711616f7aba41ad67f810bf77696",
+        "bytes": 1113
+      },
+      "src/strategies/scoring.cpp": {
+        "sha256": "e0f78b5f03a926a3fac6e51709124619ce52c3c9231151fd7fbf3e49ed301d82",
+        "bytes": 7342
+      },
+      "src/wasm/solver_bridge.cpp": {
+        "sha256": "094e26b87c1dc09b7a328a7d9315b5cadf64f56a3f52521b42945214248cb412",
+        "bytes": 9007
+      },
+      "src/core/candidate_filter.hpp": {
+        "sha256": "319b0ecf38957ba35e900aa8b1f02a20adcd80b65344f27a6b80d526822b56a4",
+        "bytes": 332
+      },
+      "src/core/feedback.hpp": {
+        "sha256": "eab3ded1e256ea9c082308961e8c97c3d7f2076a9723c1d360475ab3fa1cf2ff",
+        "bytes": 202
+      },
+      "src/evaluation/benchmark.hpp": {
+        "sha256": "e3fa19d7b2886858271a99053a32a4d7f97b9830c7930960e8151d0a2dc23f53",
+        "bytes": 2887
+      },
+      "src/probability/prior.hpp": {
+        "sha256": "de0b59f04350699b1fcb768a6aadb2783c43a3b06d80d8f71087e075a7c5358a",
+        "bytes": 389
+      },
+      "src/strategies/adaptive.hpp": {
+        "sha256": "867eae8454ff269350508f8e84291575841abca2a6da9ab6dbf8966bbba0495e",
+        "bytes": 1775
+      },
+      "src/strategies/distance.hpp": {
+        "sha256": "f6a37d6408f0a7e31bc8c69485a48038972f94c0a9f7c8692568e46f55db045f",
+        "bytes": 799
+      },
+      "src/strategies/entropy.hpp": {
+        "sha256": "bcf7ab4c6f4f4675d3c23ae2ae988657b03d1a2aa06bff649b5ed056a1de6add",
+        "bytes": 619
+      },
+      "src/strategies/risk.hpp": {
+        "sha256": "79b4d86f5d03cd8792d5dfcf5569bc6c2f5ce63565bd8df7edf432e78872bf70",
+        "bytes": 397
+      },
+      "src/strategies/scoring.hpp": {
+        "sha256": "e7b4fc0435930bfb19e0741b8c98b729946842cf6478b0cf492dcb58eb751283",
+        "bytes": 912
+      },
+      "tools/build.ps1": {
+        "sha256": "1b2eb24861302486d274e8cedec829e724de84ae8d0a3e3349b9af3b59bff2bb",
+        "bytes": 1499
+      }
+    }
+  },
+  "historical_environment": {
+    "compiler_version": null,
+    "standard_library_version": null,
+    "host_hardware": null,
+    "build_flags": null,
+    "note": "Not recorded with the benchmark artifacts. No historical environment values have been inferred from the current machine."
+  }
+}
