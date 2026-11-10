@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  min-width: 390px;
+  min-width: 280px;
   background: var(--paper);
   color: var(--ink);
   font-family: 'Clear Sans', Arial, sans-serif;
@@ -33,7 +33,18 @@ body::before {
 
 button, input { font: inherit; }
 button { cursor: pointer; }
-button:disabled { cursor: wait; opacity: .58; }
+button:disabled { cursor: default; opacity: .58; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 3px; }
+.text-button { padding: 6px 0; border: 0; background: transparent; color: var(--muted); font-size: 11px; }
+.text-button:hover { color: var(--green-dark); }
+.turn-actions { display: flex; justify-content: space-between; margin-top: 10px; }
+.guess-choices { display: grid; gap: 7px; margin-top: 18px; }
+.guess-choices button { border: 1px solid var(--line); padding: 12px; color: var(--ink); background: var(--paper); text-align: left; }
+.suggestion { border: 0; padding: 0; color: inherit; background: none; font-weight: 700; text-align: left; }
+.suggestion[aria-pressed="true"] { text-decoration: underline; text-underline-offset: 4px; }
+.analysis-note { margin: 0; padding: 0 19px 17px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.completion-panel.lost { border-color: var(--orange); background: #251f16; }
+.completion-panel.lost .completion-mark { background: var(--orange); }
 
 .shell {
   position: relative;

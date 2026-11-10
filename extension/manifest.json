@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Wowdle Solver",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "A Wordle solver powered by the Wowdle C++ backend.",
   "minimum_chrome_version": "116",
   "action": {
@@ -15,6 +15,8 @@
     "https://www.nytimes.com/games/wordle/*",
     "https://wordleunlimited.com/*",
     "https://*.wordleunlimited.com/*",
+    "https://wordleunlimited.org/*",
+    "https://*.wordleunlimited.org/*",
     "http://localhost:8000/*"
   ],
   "content_scripts": [
@@ -23,6 +25,8 @@
         "https://www.nytimes.com/games/wordle/*",
         "https://wordleunlimited.com/*",
         "https://*.wordleunlimited.com/*",
+        "https://wordleunlimited.org/*",
+        "https://*.wordleunlimited.org/*",
         "http://localhost:8000/*"
       ],
       "js": ["content.js"],

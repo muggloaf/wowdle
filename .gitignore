@@ -1,0 +1,4 @@
+*.exe
+.build/
+benchmark_results/
+__pycache__/

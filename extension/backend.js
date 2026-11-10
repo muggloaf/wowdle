@@ -5,61 +5,64 @@ class SolverBackend {
   }
 
   assetUrl(path) {
-    if (typeof chrome !== 'undefined' && chrome.runtime?.getURL) {
-      return chrome.runtime.getURL(path);
-    }
-    return path;
+    return typeof chrome !== 'undefined' && chrome.runtime?.getURL
+      ? chrome.runtime.getURL(path) : path;
   }
 
   async loadWasmScript() {
-    if (window.WowdleModuleFactory) {
-      return;
-    }
-
+    if (window.WowdleModuleFactory) return;
     await new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = this.assetUrl('wowdle.js');
       script.onload = resolve;
-      script.onerror = reject;
+      script.onerror = () => reject(new Error('could not load wowdle.js; rebuild the WASM backend'));
       document.head.appendChild(script);
     });
   }
 
   async init() {
+    this.ready = false;
+    await this.loadWasmScript();
+    this.module = await window.WowdleModuleFactory({
+      locateFile: (name) => this.assetUrl(name),
+    });
+    const loadText = async (path) => {
+      const response = await fetch(this.assetUrl(path));
+      if (!response.ok) throw new Error(`could not load ${path} (${response.status})`);
+      return response.text();
+    };
+    const [words, weights] = await Promise.all([
+      loadText('data/wordlist_fives.txt'),
+      loadText('data/word_frequencies_fives.txt'),
+    ]);
+    this.module.ccall('wowdle_init', null, ['string', 'string'], [words, weights]);
+    this.ready = true;
     try {
-      await this.loadWasmScript();
-      this.module = await window.WowdleModuleFactory();
-      const words = await fetch(this.assetUrl('data/wordlist_fives.txt'))
-        .then((response) => response.text());
-      const weights = await fetch(this.assetUrl('data/word_frequencies_fives.txt'))
-        .then((response) => response.text());
-      this.module.ccall('wowdle_init', null, ['string', 'string'], [words, weights]);
-      this.ready = true;
       return this.recommend();
     } catch (error) {
-      window.solverBackendError = error instanceof Error ? error.message : String(error);
-      console.info('cpp wasm backend is not loaded; using preview data', error);
-      return null;
+      this.ready = false;
+      throw error;
     }
+  }
+
+  call(name, types = [], values = []) {
+    if (!this.ready) throw new Error('the C++ solver is unavailable; rebuild the backend and reload');
+    const state = JSON.parse(this.module.ccall(name, 'string', types, values));
+    if (state.error) throw new Error(state.error);
+    return state;
   }
 
   recommend() {
-    if (!this.ready) {
-      return null;
-    }
-    return JSON.parse(this.module.ccall('wowdle_recommend', 'string', [], []));
+    return this.call('wowdle_recommend');
   }
 
   submit(guess, feedback) {
-    if (!this.ready) {
-      return null;
-    }
-    return JSON.parse(this.module.ccall(
-      'wowdle_submit',
-      'string',
-      ['string', 'string'],
-      [guess, feedback],
-    ));
+    return this.call('wowdle_submit', ['string', 'string'], [guess, feedback]);
+  }
+
+  restore(history) {
+    const text = history.map((turn) => `${turn.guess} ${turn.feedback}`).join('\n');
+    return this.call('wowdle_restore', ['string'], [text]);
   }
 }
 
